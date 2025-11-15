@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\RailwayConnectorService.Domain\RailwayConnectorService.Domain.csproj" />
+    <Folder Include="Persistence\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Messaging\" />
-    <Folder Include="External\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Persistence\" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\RailwayConnectorService.Contracts\RailwayConnectorService.Contracts.csproj" />
+    <ProjectReference Include="..\RailwayConnectorService.Application\RailwayConnectorService.Application.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
