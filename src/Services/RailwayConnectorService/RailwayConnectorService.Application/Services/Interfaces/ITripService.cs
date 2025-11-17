@@ -1,5 +1,5 @@
 ﻿using RailwayConnectorService.Contracts.Models.Uz;
-using RailwayConnectorService.Contracts.Models.Uz.TripResponse;
+using RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
 
 namespace RailwayConnectorService.Application.Services.Interfaces;
 

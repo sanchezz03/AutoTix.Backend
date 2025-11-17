@@ -17,6 +17,7 @@ public static class InfrastructureServiceExtension
         services
             .AddScoped<IStationWebService, StationWebService>()
             .AddScoped<ITripWebService, TripWebService>()
+            .AddScoped<IAuthWebService, AuthWebService>()
             .AddHttpClient(HttpClientName.UZ, (sp, client) =>
             {
                 var options = sp.GetRequiredService<IOptions<UzApiOptions>>().Value;

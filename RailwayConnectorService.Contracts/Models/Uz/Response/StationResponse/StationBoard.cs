@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace RailwayConnectorService.Contracts.Models.Uz.StationResponse;
+namespace RailwayConnectorService.Contracts.Models.Uz.Response.StationResponse;
 
 public class StationBoard
 {

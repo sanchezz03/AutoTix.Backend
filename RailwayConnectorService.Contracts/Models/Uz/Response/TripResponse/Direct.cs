@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace RailwayConnectorService.Contracts.Models.Uz.TripResponse;
+namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
 
 public class Direct
 {
