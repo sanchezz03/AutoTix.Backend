@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using RailwayConnectorService.Application.Interfaces;
 using RailwayConnectorService.Contracts.Models.Uz;
-using RailwayConnectorService.Contracts.Models.Uz.TripResponse;
+using RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
 using RailwayConnectorService.Infrastructure.Configuration;
 using RailwayConnectorService.Infrastructure.External.Models;
 using Serilog;
@@ -13,8 +14,8 @@ public class TripWebService : BaseWebService, ITripWebService
     private readonly string _baseUrl;
 
     public TripWebService(IHttpClientFactory httpClientFactory, ILogger logger,
-        IOptions<UzApiOptions> options)
-        : base(HttpClientName.UZ, httpClientFactory, logger)
+        IHttpContextAccessor httpContextAccessor, IOptions<UzApiOptions> options)
+        : base(HttpClientName.UZ, httpClientFactory, logger, httpContextAccessor)
     {
         _baseUrl = options.Value.BaseUrl;
     }

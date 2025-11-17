@@ -2,10 +2,6 @@
 
 public class UzResponse<T>
 {
-    public T Content { get; set; }
-
-    public UzResponse(T content)
-    {
-        Content = content;
-    }
+    public T? Data { get; set; }
+    public string? Error { get; set; }
 }

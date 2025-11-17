@@ -10,6 +10,7 @@ public static class ApplicationServiceExtension
     {
         return services
             .AddScoped<IStationService, StationService>()
-            .AddScoped<ITripService, TripService>();
+            .AddScoped<ITripService, TripService>()
+            .AddScoped<IAuthService, AuthService>();
     }
 }
