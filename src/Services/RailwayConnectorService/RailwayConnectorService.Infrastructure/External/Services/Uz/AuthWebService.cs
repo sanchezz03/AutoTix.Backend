@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using RailwayConnectorService.Application.Interfaces;
-using RailwayConnectorService.Contracts.Models.Uz;
 using RailwayConnectorService.Contracts.Models.Uz.Request.Auth;
 using RailwayConnectorService.Contracts.Models.Uz.Response.AuthResponse;
 using RailwayConnectorService.Infrastructure.Configuration;
@@ -21,14 +20,14 @@ public class AuthWebService : BaseWebService, IAuthWebService
         _baseUrl = options.Value.BaseUrl;
     }
 
-    public async Task<UzResponse<SendSms>> SendSmsAsync(SendSmsRequest request)
+    public async Task<SendSms> SendSmsAsync(SendSmsRequest request)
     {
         var payload = new { phone = request.Phone };
         var url = $"{_baseUrl}auth/send-sms";
         return await PostAsync<SendSms>(url, payload);
     }
 
-    public async Task<UzResponse<Login>> LoginAsync(LoginRequest request)
+    public async Task<Login> LoginAsync(LoginRequest request)
     {
         var payload = new
         {

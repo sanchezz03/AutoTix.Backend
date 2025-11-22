@@ -5,11 +5,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Services\Interfaces\" />
+    <Folder Include="DTOs\Response\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <PropertyGroup>

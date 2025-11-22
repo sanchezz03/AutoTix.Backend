@@ -1,3 +1,4 @@
+using RailwayConnectorService.API.Grpc;
 using RailwayConnectorService.Application.Extensions;
 using RailwayConnectorService.Infrastructure.Extensions;
 
@@ -7,14 +8,15 @@ builder.Host.AddLogger("RailwayConnectorService");
 
 builder.Services
     .AddHttpContextAccessor()
-    .AddControllers().Services
-    .AddEndpointsApiExplorer()
     .AddApplicationServices()
-    .AddInfrastructureServices(builder.Configuration);
+    .AddInfrastructureServices(builder.Configuration)
+    .AddGrpc().Services
+    .AddControllers();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapGrpcService<AuthGrpcService>();
 
 app.Run();

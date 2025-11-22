@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option csharp_namespace = "RailwayConnectorService.API.Protos";
+
+package railway;
+
+// ------------------------
+// Requests
+// ------------------------
+message SendSmsRequest {
+    string phone = 1;
+}
+
+message LoginRequest {
+    string phone = 1;
+    string code = 2;
+    
+    message DeviceInfo {
+        string device_id = 1;
+        string os = 2;
+        string model = 3;
+    }
+
+    DeviceInfo device = 3;
+}
+
+// ------------------------
+// Responses
+// ------------------------
+message UzResponseSendSms {
+    bool success = 1;
+    int32 retry_after = 2;
+    string error = 3;
+}
+
+message Token {
+    string access = 1;
+    string refresh = 2;
+}
+
+message Profile {
+    string name = 1;
+    string email = 2;
+}
+
+message UzResponseLogin {
+    Token token = 1;
+    Profile profile = 2;
+    string error = 3;
+}
+
+message Empty {}
+
+// ------------------------
+// Service
+// ------------------------
+service AuthServiceGrpc {
+    rpc SendSms (SendSmsRequest) returns (UzResponseSendSms);
+    rpc Login (LoginRequest) returns (UzResponseLogin);
+    rpc Logout (Empty) returns (Empty);
+}
