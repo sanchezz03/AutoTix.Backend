@@ -14,7 +14,7 @@ public class TripWebService : BaseWebService, ITripWebService
 
     public TripWebService(IHttpClientFactory httpClientFactory, ILogger logger,
         IHttpContextAccessor httpContextAccessor, IOptions<UzApiOptions> options)
-        : base(HttpClientName.UZ, httpClientFactory, logger, httpContextAccessor, options)
+        : base(HttpClientName.UZ, httpClientFactory, logger, httpContextAccessor)
     {
         _baseUrl = options.Value.BaseUrl;
     }

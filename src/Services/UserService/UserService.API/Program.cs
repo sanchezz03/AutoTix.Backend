@@ -1,3 +1,4 @@
+using UserService.Application.Extensions;
 using UserService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services
     .AddHttpContextAccessor()
     .AddControllers().Services
     .AddDatabase(builder.Configuration)
+    .AddApplicationServices()
+    .AddInfrastructureServices(builder.Configuration)
     .AddEndpointsApiExplorer();
 
 var app = builder.Build();

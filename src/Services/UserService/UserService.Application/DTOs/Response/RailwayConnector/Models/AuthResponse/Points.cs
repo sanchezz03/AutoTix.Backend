@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace UserService.Infrastructure.External.RailwayConnector.Models.AuthResponse;
+namespace UserService.Application.DTOs.Response.RailwayConnector.Models.AuthResponse;
 
 public class Points
 {
