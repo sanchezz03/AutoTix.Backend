@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using RailwayConnectorService.Contracts.Models.Uz;
 using Serilog;
 using System.Net.Http.Headers;
 
@@ -21,7 +20,7 @@ public abstract class BaseWebService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    protected async Task<UzResponse<T>> GetAsync<T>(string url)
+    protected async Task<T> GetAsync<T>(string url)
     {
         try
         {
@@ -30,25 +29,25 @@ public abstract class BaseWebService
             ApplyUzHeaders(request);
 
             var response = await _httpClient.SendAsync(request);
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.Error($"HTTP GET failed: {response.StatusCode}, Content: {responseContent}");
-                return new UzResponse<T> { Error = $"HTTP {response.StatusCode}: {responseContent}" };
+                _logger.Error($"HTTP GET failed: {response.StatusCode}, Content: {content}");
+                throw new HttpRequestException($"HTTP {response.StatusCode}: {content}");
             }
 
-            var data = JsonConvert.DeserializeObject<T>(responseContent);
-            return new UzResponse<T> { Data = data };
+            return JsonConvert.DeserializeObject<T>(content)
+                   ?? throw new InvalidOperationException("Response deserialization returned null");
         }
         catch (Exception ex)
         {
             _logger.Error(ex, nameof(GetAsync));
-            return new UzResponse<T> { Error = ex.Message };
+            throw;
         }
     }
 
-    protected async Task<UzResponse<T>> PostAsync<T>(string url, object? payload = null)
+    protected async Task<T> PostAsync<T>(string url, object? payload = null)
     {
         try
         {
@@ -65,24 +64,24 @@ public abstract class BaseWebService
             ApplyUzHeaders(request);
 
             var response = await _httpClient.SendAsync(request);
-
             var responseContent = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
                 _logger.Error($"HTTP POST failed: {response.StatusCode}, Content: {responseContent}");
-                return new UzResponse<T> { Error = $"HTTP {response.StatusCode}: {responseContent}" };
+                throw new HttpRequestException($"HTTP {response.StatusCode}: {responseContent}");
             }
 
-            var data = JsonConvert.DeserializeObject<T>(responseContent);
-            return new UzResponse<T> { Data = data };
+            return JsonConvert.DeserializeObject<T>(responseContent)
+                   ?? throw new InvalidOperationException("Response deserialization returned null");
         }
         catch (Exception ex)
         {
             _logger.Error(ex, nameof(PostAsync));
-            return new UzResponse<T> { Error = ex.Message };
+            throw;
         }
     }
+
 
     #region Private methods
 

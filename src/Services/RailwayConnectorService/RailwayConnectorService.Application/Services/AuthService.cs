@@ -1,6 +1,5 @@
 ﻿using RailwayConnectorService.Application.Interfaces;
 using RailwayConnectorService.Application.Services.Interfaces;
-using RailwayConnectorService.Contracts.Models.Uz;
 using RailwayConnectorService.Contracts.Models.Uz.Request.Auth;
 using RailwayConnectorService.Contracts.Models.Uz.Response.AuthResponse;
 
@@ -15,12 +14,12 @@ public class AuthService : IAuthService
         _authWebService = authWebService;
     }
 
-    public Task<UzResponse<SendSms>> SendSmsAsync(SendSmsRequest request)
+    public Task<SendSms> SendSmsAsync(SendSmsRequest request)
     {
         return _authWebService.SendSmsAsync(request);
     }
 
-    public Task<UzResponse<Login>> LoginAsync(LoginRequest request)
+    public Task<Login> LoginAsync(LoginRequest request)
     {
         return _authWebService.LoginAsync(request);
     }

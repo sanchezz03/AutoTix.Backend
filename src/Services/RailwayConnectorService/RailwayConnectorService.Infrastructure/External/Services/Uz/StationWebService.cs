@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using RailwayConnectorService.Application.Interfaces;
-using RailwayConnectorService.Contracts.Models.Uz;
 using RailwayConnectorService.Contracts.Models.Uz.Response.StationResponse;
 using RailwayConnectorService.Infrastructure.Configuration;
 using RailwayConnectorService.Infrastructure.External.Models;
@@ -20,19 +19,19 @@ public class StationWebService : BaseWebService, IStationWebService
         _baseUrl = options.Value.BaseUrl;
     }
 
-    public Task<UzResponse<List<Station>>> GetStationsAsync()
+    public Task<List<Station>> GetStationsAsync()
     {
         var url = $"{_baseUrl}stations?search=";
         return GetAsync<List<Station>>(url);
     }
 
-    public Task<UzResponse<List<Station>>> GetStationBoardsAsync()
+    public Task<List<Station>> GetStationBoardsAsync()
     {
         var url = $"{_baseUrl}station-boards";
         return GetAsync<List<Station>>(url);
     }
 
-    public Task<UzResponse<StationBoard>> GetStationBoardAsync(long id)
+    public Task<StationBoard> GetStationBoardAsync(long id)
     {
         var url = $"{_baseUrl}station-boards/{id}";
         return GetAsync<StationBoard>(url);

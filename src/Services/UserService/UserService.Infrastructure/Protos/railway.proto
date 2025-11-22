@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+option csharp_namespace = "UserService.Infrastructure.Protos";
+
+package railway;
+
+// ------------------------
+// Requests
+// ------------------------
+message GrpcSendSmsRequest {
+    string phone = 1;
+}
+
+message GrpcLoginRequest {
+    string phone = 1;
+    string code = 2;
+    GrpcDeviceInfo device = 3;
+}
+
+message GrpcDeviceInfo {
+    string name = 1;
+    string fcm_token = 2;
+}
+
+
+// ------------------------
+// Responses
+// ------------------------
+message GrpcSendSmsResponse {
+    bool success = 1;
+    int32 retry_after = 2;
+}
+
+message GrpcPrivilegeData {
+    string student_id = 1;
+}
+
+message GrpcPrivilege {
+    int32 id = 1;
+    string name = 2;
+    string description = 3;
+    int32 input_type = 4;
+    bool active = 5;
+    string companion_id = 6;
+    string rules = 7;
+    string hint = 8;
+}
+
+message GrpcLoyaltyPoints {
+    string value = 1;
+    string label = 2;
+}
+
+message GrpcDataColumn {
+    string value = 1;
+    string label = 2;
+}
+
+message GrpcInfoBlock {
+    string title = 1;
+    string description = 2;
+}
+
+message GrpcLoyalty {
+    string title = 1;
+    string info_link = 2;
+    string icon = 3;
+    string icon_hugs = 4;
+    int32 points_count = 5;
+    GrpcLoyaltyPoints points = 6;
+    repeated GrpcDataColumn data_columns = 7;
+    GrpcInfoBlock info_block = 8;
+}
+
+message GrpcPassenger {
+    int32 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    int32 ticket_type = 4;
+    int32 privilege_id = 5;
+    GrpcPrivilegeData privilege_data = 6;
+    GrpcPrivilege privilege = 7;
+    string photo = 8;
+    bool main = 9;
+    string phone = 10;
+    bool is_share_user = 11;
+    string birthday = 12;
+    string gender = 13;
+}
+
+message GrpcAdditionalAction {
+    string title = 1;
+    string icon = 2;
+    string link = 3;
+}
+
+message GrpcAchievements {
+    string awards_count = 1;
+    string title = 2;
+    string image = 3;
+    bool levels_enabled = 4;
+}
+
+message GrpcGender {
+    int32 id = 1;
+    string title = 2;
+}
+
+message GrpcProfile {
+    int32 id = 1;
+    int32 type = 2;
+    string phone = 3;
+    string email = 4;
+    string share_text = 5;
+    GrpcPassenger passenger = 6;
+    repeated GrpcAdditionalAction additional_actions = 7;
+    GrpcLoyalty loyalty = 8;
+    string diia_verified_at = 9;
+    string verified_at = 10;
+    GrpcAchievements achievements = 11;
+    repeated GrpcGender genders = 12;
+    repeated string special_statuses = 13;
+    string verification_type = 14;
+    repeated int32 available_verification_types = 15;
+}
+
+message GrpcToken {
+    string access_token = 1;
+    int32 expires_in = 2;
+}
+
+message GrpcLoginResponse {
+    GrpcToken token = 1;
+    GrpcProfile profile = 2;
+}
+
+message Empty {}
+
+// ------------------------
+// Service
+// ------------------------
+service AuthServiceGrpc {
+    rpc SendSms (GrpcSendSmsRequest) returns (GrpcSendSmsResponse);
+    rpc Login (GrpcLoginRequest) returns (GrpcLoginResponse);
+    rpc Logout (Empty) returns (Empty);
+}
