@@ -97,7 +97,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwayConnectorService.App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwayConnectorService.Infrastructure", "src\Services\RailwayConnectorService\RailwayConnectorService.Infrastructure\RailwayConnectorService.Infrastructure.csproj", "{76A83564-4F32-4CC0-9F33-F4E56FC04497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwayConnectorService.Contracts", "RailwayConnectorService.Contracts\RailwayConnectorService.Contracts.csproj", "{169A19BD-3593-487C-BB96-F10958B80E44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwayConnectorService.Contracts", "src\Services\RailwayConnectorService\RailwayConnectorService.Contracts\RailwayConnectorService.Contracts.csproj", "{639B8522-5DB3-4B21-A916-CDACC472C327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -529,18 +529,18 @@ Global
 		{76A83564-4F32-4CC0-9F33-F4E56FC04497}.Release|x64.Build.0 = Release|Any CPU
 		{76A83564-4F32-4CC0-9F33-F4E56FC04497}.Release|x86.ActiveCfg = Release|Any CPU
 		{76A83564-4F32-4CC0-9F33-F4E56FC04497}.Release|x86.Build.0 = Release|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Debug|x64.Build.0 = Debug|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Debug|x86.Build.0 = Debug|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Release|x64.ActiveCfg = Release|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Release|x64.Build.0 = Release|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Release|x86.ActiveCfg = Release|Any CPU
-		{169A19BD-3593-487C-BB96-F10958B80E44}.Release|x86.Build.0 = Release|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Debug|x64.Build.0 = Debug|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Debug|x86.Build.0 = Debug|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Release|x64.ActiveCfg = Release|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Release|x64.Build.0 = Release|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Release|x86.ActiveCfg = Release|Any CPU
+		{639B8522-5DB3-4B21-A916-CDACC472C327}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -592,7 +592,7 @@ Global
 		{3AB561AF-252F-4F69-9670-67794A69A7E1} = {4D24BFC3-EDA7-F64F-2D32-7D150918E918}
 		{5753FC13-05AC-414F-B2B2-F2EFB8EDEC6F} = {4D24BFC3-EDA7-F64F-2D32-7D150918E918}
 		{76A83564-4F32-4CC0-9F33-F4E56FC04497} = {4D24BFC3-EDA7-F64F-2D32-7D150918E918}
-		{169A19BD-3593-487C-BB96-F10958B80E44} = {4D24BFC3-EDA7-F64F-2D32-7D150918E918}
+		{639B8522-5DB3-4B21-A916-CDACC472C327} = {4D24BFC3-EDA7-F64F-2D32-7D150918E918}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23B20A10-6514-4A07-B6FE-DCAD8F4A0FF2}

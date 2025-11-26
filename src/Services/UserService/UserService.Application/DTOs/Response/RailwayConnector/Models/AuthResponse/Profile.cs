@@ -41,7 +41,7 @@ public class Profile
     public List<Gender> Genders { get; set; }
 
     [JsonProperty("special_statuses")]
-    public List<object> SpecialStatuses { get; set; }
+    public List<string> SpecialStatuses { get; set; }
 
     [JsonProperty("verification_type")]
     public object VerificationType { get; set; }

@@ -1,17 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <Folder Include="Persistence\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
+    <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\RailwayConnectorService.Contracts\RailwayConnectorService.Contracts.csproj" />
     <ProjectReference Include="..\RailwayConnectorService.Application\RailwayConnectorService.Application.csproj" />
+    <ProjectReference Include="..\RailwayConnectorService.Contracts\RailwayConnectorService.Contracts.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

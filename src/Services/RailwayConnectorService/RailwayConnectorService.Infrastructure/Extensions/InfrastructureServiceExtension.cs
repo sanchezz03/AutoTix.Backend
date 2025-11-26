@@ -5,6 +5,8 @@ using RailwayConnectorService.Application.Interfaces;
 using RailwayConnectorService.Infrastructure.Configuration;
 using RailwayConnectorService.Infrastructure.External.Models;
 using RailwayConnectorService.Infrastructure.External.Services.Uz;
+using RailwayConnectorService.Infrastructure.Services;
+using StackExchange.Redis;
 
 namespace RailwayConnectorService.Infrastructure.Extensions;
 
@@ -13,11 +15,21 @@ public static class InfrastructureServiceExtension
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<UzApiOptions>(configuration.GetSection("UzApi"));
+        services.Configure<RedisOptions>(configuration.GetSection("Redis"));
 
         services
+            //Singleton Services
+            .AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                var options = sp.GetRequiredService<IOptions<RedisOptions>>().Value;
+                return ConnectionMultiplexer.Connect(options.ConnectionString);
+            })
+
+            //Scoped Services
             .AddScoped<IStationWebService, StationWebService>()
             .AddScoped<ITripWebService, TripWebService>()
             .AddScoped<IAuthWebService, AuthWebService>()
+            .AddScoped<ICacheService, CacheService>()
             .AddHttpClient(HttpClientName.UZ, (sp, client) =>
             {
                 var options = sp.GetRequiredService<IOptions<UzApiOptions>>().Value;

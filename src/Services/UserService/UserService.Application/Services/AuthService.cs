@@ -18,13 +18,13 @@ public class AuthService : IAuthService
     {
         return await _railwayConnetorClient.SendSmsAsync(request);
     }
-    public Task<Login> LoginAsync(LoginRequest request)
+    public async Task<Login> LoginAsync(LoginRequest request)
     {
-        throw new NotImplementedException();
+        return await _railwayConnetorClient.LoginAsync(request);
     }
 
-    public Task LogoutAsync()
+    public async Task LogoutAsync()
     {
-        throw new NotImplementedException();
+        await _railwayConnetorClient.LogoutAsync();
     }
 }
