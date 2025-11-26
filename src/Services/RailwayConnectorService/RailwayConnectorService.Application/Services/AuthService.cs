@@ -8,24 +8,46 @@ namespace RailwayConnectorService.Application.Services;
 public class AuthService : IAuthService
 {
     private readonly IAuthWebService _authWebService;
+    private readonly ICacheService _cacheService;
 
-    public AuthService(IAuthWebService authWebService)
+    public AuthService(IAuthWebService authWebService, ICacheService cacheService)
     {
         _authWebService = authWebService;
+        _cacheService = cacheService;
     }
 
-    public Task<SendSms> SendSmsAsync(SendSmsRequest request)
+    public async Task<SendSms> SendSmsAsync(SendSmsRequest request)
     {
-        return _authWebService.SendSmsAsync(request);
+        var cacheKey = $"auth:sms:{request.Phone}";
+
+        var cached = await _cacheService.GetAsync<SendSms>(cacheKey);
+        if (cached != null)
+            return cached;
+
+        var response = await _authWebService.SendSmsAsync(request);
+
+        await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromMinutes(2));
+
+        return response;
     }
 
-    public Task<Login> LoginAsync(LoginRequest request)
+    public async Task<Login> LoginAsync(LoginRequest request)
     {
-        return _authWebService.LoginAsync(request);
+        var cacheKey = $"auth:login:{request.Phone}:{request.Code}";
+
+        var cached = await _cacheService.GetAsync<Login>(cacheKey);
+        if (cached != null)
+            return cached;
+
+        var response = await _authWebService.LoginAsync(request);
+
+        await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromMinutes(5));
+
+        return response;
     }
 
-    public Task LogoutAsync()
+    public async Task LogoutAsync()
     {
-        return _authWebService.LogoutAsync();
+        await _authWebService.LogoutAsync();
     }
 }

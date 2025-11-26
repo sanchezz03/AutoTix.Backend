@@ -21,14 +21,8 @@
     <ProjectReference Include="..\RailwayConnectorService.Infrastructure\RailwayConnectorService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
     <ItemGroup>
-    	<Protobuf Include="Protos\railway.proto"
-    			  GrpcServices="Server"
-    			  ProtoRoot="Protos" />
+    	<Protobuf Include="Protos\railway.proto" GrpcServices="Server" ProtoRoot="Protos" />
     </ItemGroup>
 
 </Project>
