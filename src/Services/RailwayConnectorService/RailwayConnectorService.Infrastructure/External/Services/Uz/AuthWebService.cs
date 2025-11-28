@@ -13,9 +13,8 @@ public class AuthWebService : BaseWebService, IAuthWebService
 {
     private readonly string _baseUrl;
 
-    public AuthWebService(IHttpClientFactory httpClientFactory, ILogger logger,
-        IHttpContextAccessor httpContextAccessor, IOptions<UzApiOptions> options)
-         : base(HttpClientName.UZ, httpClientFactory, logger, httpContextAccessor)
+    public AuthWebService(IHttpClientFactory httpClientFactory, ILogger logger, IOptions<UzApiOptions> options)
+         : base(HttpClientName.UZ, httpClientFactory, logger)
     {
         _baseUrl = options.Value.BaseUrl;
     }
@@ -44,9 +43,9 @@ public class AuthWebService : BaseWebService, IAuthWebService
         return await PostAsync<Login>(url, payload);
     }
 
-    public async Task LogoutAsync()
+    public async Task LogoutAsync(LogoutRequest request)
     {
         var url = $"{_baseUrl}auth/logout";
-        await PostAsync<object?>(url, null);
+        await PostAsync<object?>(url, null, request.AccessToken);
     }
 }

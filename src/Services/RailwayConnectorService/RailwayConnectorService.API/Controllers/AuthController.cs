@@ -32,11 +32,11 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout()
+    public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
     {
-        await _authService.LogoutAsync();
+        await _authService.LogoutAsync(request);
 
         return NoContent();
     }

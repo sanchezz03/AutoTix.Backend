@@ -122,9 +122,13 @@ public class AuthGrpcService : AuthServiceGrpc.AuthServiceGrpcBase
         };
     }
 
-    public override async Task<Empty> Logout(Empty request, ServerCallContext context)
+    public override async Task<Empty> Logout(GrpcLogoutRequest request, ServerCallContext context)
     {
-        await _authService.LogoutAsync();
+        var logoutRequest = new LogoutRequest
+        {
+            AccessToken = request.AccessToken
+        };
+        await _authService.LogoutAsync(logoutRequest);
         return new Empty();
     }
 }

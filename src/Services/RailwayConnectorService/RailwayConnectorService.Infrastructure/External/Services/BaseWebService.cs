@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Serilog;
 using System.Net.Http.Headers;
 
@@ -7,25 +6,21 @@ namespace RailwayConnectorService.Infrastructure.External.Services;
 
 public abstract class BaseWebService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     protected readonly HttpClient _httpClient;
     protected readonly ILogger _logger;
 
-    public BaseWebService(string httpClientName, IHttpClientFactory httpClientFactory, ILogger logger,
-        IHttpContextAccessor httpContextAccessor)
+    public BaseWebService(string httpClientName, IHttpClientFactory httpClientFactory, ILogger logger)
     {
         _httpClient = httpClientFactory.CreateClient(httpClientName);
         _logger = logger;
-        _httpContextAccessor = httpContextAccessor;
     }
 
-    protected async Task<T> GetAsync<T>(string url)
+    protected async Task<T> GetAsync<T>(string url, string? accessToken = null)
     {
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
-            ApplyAuthorizationHeader(request);
+            ApplyAuthorizationHeader(request, accessToken);
             ApplyUzHeaders(request);
 
             var response = await _httpClient.SendAsync(request);
@@ -47,7 +42,7 @@ public abstract class BaseWebService
         }
     }
 
-    protected async Task<T> PostAsync<T>(string url, object? payload = null)
+    protected async Task<T> PostAsync<T>(string url, object? payload = null, string? accessToken = null)
     {
         try
         {
@@ -60,7 +55,7 @@ public abstract class BaseWebService
                 Content = content
             };
 
-            ApplyAuthorizationHeader(request);
+            ApplyAuthorizationHeader(request, accessToken);      
             ApplyUzHeaders(request);
 
             var response = await _httpClient.SendAsync(request);
@@ -85,16 +80,24 @@ public abstract class BaseWebService
 
     #region Private methods
 
-    private void ApplyAuthorizationHeader(HttpRequestMessage request)
+    private void ApplyAuthorizationHeader(HttpRequestMessage request, string? accessToken = null)
     {
-        var authHeader = _httpContextAccessor.HttpContext?
-            .Request.Headers["Authorization"]
-            .ToString();
+        request.Headers.Remove("Authorization");
 
-        if (!string.IsNullOrEmpty(authHeader))
+        if (!string.IsNullOrEmpty(accessToken))
         {
-            request.Headers.Authorization = AuthenticationHeaderValue.Parse(authHeader);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            return;
         }
+
+        //var authHeader = _httpContextAccessor.HttpContext?
+        //    .Request.Headers["Authorization"]
+        //    .ToString();
+
+        //if (!string.IsNullOrEmpty(authHeader))
+        //{
+        //    request.Headers.Authorization = AuthenticationHeaderValue.Parse(authHeader);
+        //}
     }
 
     private void ApplyUzHeaders(HttpRequestMessage request)

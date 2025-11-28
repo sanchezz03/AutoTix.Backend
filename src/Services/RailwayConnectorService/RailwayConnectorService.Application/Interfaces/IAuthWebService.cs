@@ -6,5 +6,5 @@ public interface IAuthWebService
 {
     Task<SendSms> SendSmsAsync(SendSmsRequest request);
     Task<Login> LoginAsync(LoginRequest request);
-    Task LogoutAsync();
+    Task LogoutAsync(LogoutRequest request);
 }

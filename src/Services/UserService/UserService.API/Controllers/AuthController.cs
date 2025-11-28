@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UserService.Application.DTOs.Request;
 using UserService.Application.Services.Interfaces;
 
@@ -9,10 +10,12 @@ namespace UserService.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _service;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthController(IAuthService service)
+    public AuthController(IAuthService service, IHttpContextAccessor httpContextAccessor)
     {
         _service = service;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     [HttpPost("send-message")]
@@ -32,7 +35,14 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        await _service.LogoutAsync();
+        //var currentUserId = _httpContextAccessor.HttpContext?.User
+        //    .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        //if (string.IsNullOrEmpty(currentUserId))
+        //    return Unauthorized("User ID missing in token");
+
+        //long userId = long.Parse(currentUserId);
+        await _service.LogoutAsync(1);
         return NoContent();
     }
 }

@@ -161,8 +161,12 @@ public class RailwayConnectorClient : IRailwayConnetorClient
         };
     }
 
-    public async Task LogoutAsync()
+    public async Task LogoutAsync(string accessToken)
     {
-        await _grpcClient.LogoutAsync(new Empty());
+        var request = new GrpcLogoutRequest
+        {
+            AccessToken = accessToken
+        };
+        await _grpcClient.LogoutAsync(request);
     }
 }

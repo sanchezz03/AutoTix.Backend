@@ -7,5 +7,5 @@ public interface IRailwayConnetorClient
 {
     Task<SendSms> SendSmsAsync(SendSmsRequest request);
     Task<Login> LoginAsync(LoginRequest request);
-    Task LogoutAsync();
+    Task LogoutAsync(string accessToken);
 }
