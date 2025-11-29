@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RailwayConnectorService.Application.Services.Interfaces;
 using RailwayConnectorService.Contracts.Models.Uz.Request.Auth;
 
@@ -16,7 +15,6 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    [AllowAnonymous]
     [HttpPost("send-sms")]
     public async Task<IActionResult> SendSms([FromBody] SendSmsRequest request)
     {
@@ -24,7 +22,6 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
-    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
@@ -32,12 +29,10 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize]
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout()
+    public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
     {
-        await _authService.LogoutAsync();
-
+        await _authService.LogoutAsync(request);
         return NoContent();
     }
 }

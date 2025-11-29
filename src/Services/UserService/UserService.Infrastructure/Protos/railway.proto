@@ -22,6 +22,9 @@ message GrpcDeviceInfo {
     string fcm_token = 2;
 }
 
+message GrpcLogoutRequest {
+    string access_token = 1;
+}
 
 // ------------------------
 // Responses
@@ -142,5 +145,5 @@ message Empty {}
 service AuthServiceGrpc {
     rpc SendSms (GrpcSendSmsRequest) returns (GrpcSendSmsResponse);
     rpc Login (GrpcLoginRequest) returns (GrpcLoginResponse);
-    rpc Logout (Empty) returns (Empty);
+    rpc Logout (GrpcLogoutRequest) returns (Empty);
 }

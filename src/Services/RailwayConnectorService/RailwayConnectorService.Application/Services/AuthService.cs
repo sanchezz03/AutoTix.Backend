@@ -46,8 +46,8 @@ public class AuthService : IAuthService
         return response;
     }
 
-    public async Task LogoutAsync()
+    public async Task LogoutAsync(LogoutRequest request)
     {
-        await _authWebService.LogoutAsync();
+        await _authWebService.LogoutAsync(request);
     }
 }

@@ -12,8 +12,7 @@ public class StationWebService : BaseWebService, IStationWebService
 {
     private readonly string _baseUrl;
 
-    public StationWebService(IHttpClientFactory httpClientFactory, ILogger logger,
-        IHttpContextAccessor httpContextAccessor, IOptions<UzApiOptions> options)
+    public StationWebService(IHttpClientFactory httpClientFactory, ILogger logger, IOptions<UzApiOptions> options, IHttpContextAccessor httpContextAccessor)
          : base(HttpClientName.UZ, httpClientFactory, logger, httpContextAccessor)
     {
         _baseUrl = options.Value.BaseUrl;

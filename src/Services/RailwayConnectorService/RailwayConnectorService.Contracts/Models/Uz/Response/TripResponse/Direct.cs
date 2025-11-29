@@ -5,35 +5,35 @@ namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
 public class Direct
 {
     [JsonProperty("id")]
-    public int Id;
+    public int Id { get; set; }
 
     [JsonProperty("depart_at")]
-    public int DepartAt;
+    public int DepartAt { get; set; }
 
     [JsonProperty("arrive_at")]
-    public int ArriveAt;
+    public int ArriveAt { get; set; }
 
     [JsonProperty("station_from")]
-    public string StationFrom;
+    public string StationFrom { get; set; }
 
     [JsonProperty("station_to")]
-    public string StationTo;
+    public string StationTo { get; set; }
 
     [JsonProperty("stations_time_offset")]
-    public int StationsTimeOffset;
+    public int StationsTimeOffset { get; set; }
 
     [JsonProperty("train")]
-    public Train Train;
+    public Train Train { get; set; }
 
     [JsonProperty("discount")]
-    public object Discount;
+    public object Discount { get; set; }
 
     [JsonProperty("custom_tag")]
-    public object CustomTag;
+    public object CustomTag { get; set; }
 
     [JsonProperty("monitoring")]
-    public Monitoring Monitoring;
+    public Monitoring Monitoring { get; set; }
 
     [JsonProperty("is_departed")]
-    public bool IsDeparted;
+    public bool IsDeparted { get; set; }
 }
