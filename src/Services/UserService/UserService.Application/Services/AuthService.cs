@@ -54,15 +54,14 @@ public class AuthService : IAuthService
         await _credentials.DeactivateUserCredentialsAsync(user.Id);
 
         var token = uzLogin.Token.AccessToken;
-        //var encryptedToken = _encryption.Protect(token);
+        var encryptedToken = _encryption.Protect(token);
 
         var expires = DateTimeOffset.UtcNow.AddSeconds(uzLogin.Token.ExpiresIn);
 
         await _credentials.AddAsync(new UzCredential
         {
             UserId = user.Id,
-            //EncryptedAccessToken = encryptedToken,
-            EncryptedAccessToken = token,
+            EncryptedAccessToken = encryptedToken,
             ExpiresAt = expires,
             CreatedAt = DateTimeOffset.UtcNow,
             IsActive = true,
@@ -90,8 +89,7 @@ public class AuthService : IAuthService
             return;
         }
 
-        //var accessToken = _encryption.Unprotect(credential.EncryptedAccessToken);
-        var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV6Lmdvdi51YVwvYXBpXC92MlwvYXV0aFwvbG9naW4iLCJpYXQiOjE3NjQzMTQ2NzMsImV4cCI6MTc4MDA4MjY3MywibmJmIjoxNzY0MzE0NjczLCJqdGkiOiJ4S3pLV25RUEVxNG9MRmZsIiwic3ViIjozNDk5MTg0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwiZCI6ODgxMDMyMn0.cwh9IF_6IgRoCGZ6YpMlvjqSEg1St0MirGa2Kn4gHO4";
+        var accessToken = _encryption.Unprotect(credential.EncryptedAccessToken);
         await _railwayConnetorClient.LogoutAsync(accessToken);
         await _credentials.DeactivateUserCredentialsAsync(userId);
     }

@@ -5,17 +5,17 @@ namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
 public class WagonClass
 {
     [JsonProperty("id")]
-    public string Id;
+    public string Id { get; set; }
 
     [JsonProperty("name")]
-    public string Name;
+    public string Name { get; set; }
 
     [JsonProperty("free_seats")]
-    public int FreeSeats;
+    public int FreeSeats { get; set; }
 
     [JsonProperty("price")]
-    public int Price;
+    public int Price { get; set; }
 
     [JsonProperty("amenities")]
-    public List<string> Amenities;
+    public List<string> Amenities { get; set; }
 }

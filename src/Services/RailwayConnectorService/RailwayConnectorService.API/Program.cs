@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.AddLogger("RailwayConnectorService");
 
 builder.Services
+    .AddHttpContextAccessor()
     .AddApplicationServices()
     .AddInfrastructureServices(builder.Configuration)
     .AddGrpc().Services

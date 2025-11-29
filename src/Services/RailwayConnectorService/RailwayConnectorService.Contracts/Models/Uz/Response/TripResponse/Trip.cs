@@ -5,17 +5,17 @@ namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
 public class Trip
 {
     [JsonProperty("station_from")]
-    public string StationFrom;
+    public string StationFrom { get; set; }
 
     [JsonProperty("station_to")]
-    public string StationTo;
+    public string StationTo { get; set; }
 
     [JsonProperty("direct")]
-    public List<Direct> Direct;
+    public List<Direct> Direct { get; set; }
 
     [JsonProperty("with_transfer")]
-    public object WithTransfer;
+    public object WithTransfer { get; set; }
 
     [JsonProperty("monitoring")]
-    public object Monitoring;
+    public object Monitoring { get; set; }
 }

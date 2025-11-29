@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Serilog;
 using System.Net.Http.Headers;
 
@@ -9,10 +10,14 @@ public abstract class BaseWebService
     protected readonly HttpClient _httpClient;
     protected readonly ILogger _logger;
 
-    public BaseWebService(string httpClientName, IHttpClientFactory httpClientFactory, ILogger logger)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private const string X_SESSION_ID = "db1eedc6-2e2d-4c68-af8f-2e6b844b6e98";
+
+    public BaseWebService(string httpClientName, IHttpClientFactory httpClientFactory, ILogger logger, IHttpContextAccessor httpContextAccessor)
     {
         _httpClient = httpClientFactory.CreateClient(httpClientName);
         _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     protected async Task<T> GetAsync<T>(string url, string? accessToken = null)
@@ -67,6 +72,11 @@ public abstract class BaseWebService
                 throw new HttpRequestException($"HTTP {response.StatusCode}: {responseContent}");
             }
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return default;
+            }
+
             return JsonConvert.DeserializeObject<T>(responseContent)
                    ?? throw new InvalidOperationException("Response deserialization returned null");
         }
@@ -90,6 +100,8 @@ public abstract class BaseWebService
             return;
         }
 
+        #region TEST BY BEARER TOKEN
+        
         //var authHeader = _httpContextAccessor.HttpContext?
         //    .Request.Headers["Authorization"]
         //    .ToString();
@@ -98,6 +110,8 @@ public abstract class BaseWebService
         //{
         //    request.Headers.Authorization = AuthenticationHeaderValue.Parse(authHeader);
         //}
+
+        #endregion
     }
 
     private void ApplyUzHeaders(HttpRequestMessage request)
@@ -112,10 +126,11 @@ public abstract class BaseWebService
 
         request.Headers.Add("Origin", "https://booking.uz.gov.ua");
         request.Headers.Add("Referer", "https://booking.uz.gov.ua/");
+        request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36");
         request.Headers.Add("x-client-locale", "uk");
-        request.Headers.Add("x-user-agent", "UZ/2 Web/1 User/guest");
+        request.Headers.Add("x-user-agent", "UZ/2 Web/1 User/3499184");
 
-        request.Headers.Add("x-session-id", Guid.NewGuid().ToString());
+        request.Headers.Add("x-session-id", X_SESSION_ID);
     }
 
     #endregion

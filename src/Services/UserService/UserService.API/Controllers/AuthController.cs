@@ -35,14 +35,14 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        //var currentUserId = _httpContextAccessor.HttpContext?.User
-        //    .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var currentUserId = _httpContextAccessor.HttpContext?.User
+            .FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        //if (string.IsNullOrEmpty(currentUserId))
-        //    return Unauthorized("User ID missing in token");
+        if (string.IsNullOrEmpty(currentUserId))
+            return Unauthorized("User ID missing in token");
 
-        //long userId = long.Parse(currentUserId);
-        await _service.LogoutAsync(1);
+        long userId = long.Parse(currentUserId);
+        await _service.LogoutAsync(userId);
         return NoContent();
     }
 }

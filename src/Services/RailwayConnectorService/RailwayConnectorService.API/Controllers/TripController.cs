@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RailwayConnectorService.Application.Services.Interfaces;
 
 namespace RailwayConnectorService.API.Controllers;
 
-[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class TripController : ControllerBase

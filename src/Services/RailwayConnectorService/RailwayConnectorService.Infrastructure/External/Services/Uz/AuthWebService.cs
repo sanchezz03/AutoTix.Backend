@@ -13,8 +13,8 @@ public class AuthWebService : BaseWebService, IAuthWebService
 {
     private readonly string _baseUrl;
 
-    public AuthWebService(IHttpClientFactory httpClientFactory, ILogger logger, IOptions<UzApiOptions> options)
-         : base(HttpClientName.UZ, httpClientFactory, logger)
+    public AuthWebService(IHttpClientFactory httpClientFactory, ILogger logger, IOptions<UzApiOptions> options, IHttpContextAccessor httpContextAccessor)
+         : base(HttpClientName.UZ, httpClientFactory, logger, httpContextAccessor)
     {
         _baseUrl = options.Value.BaseUrl;
     }
