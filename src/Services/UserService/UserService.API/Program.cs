@@ -1,3 +1,4 @@
+using UserService.API.Extensions;
 using UserService.Application.Extensions;
 using UserService.Infrastructure.Extensions;
 
@@ -14,7 +15,8 @@ builder.Services
     .AddAuthServices(builder.Configuration)
     .AddJwtAuthentication(builder.Configuration)
     .AddDataProtection().Services
-    .AddEndpointsApiExplorer();
+    .AddEndpointsApiExplorer()
+    .AddCORS();
 
 var app = builder.Build();
 
@@ -25,5 +27,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseCors("CorsPolicy");
 app.MapControllers();
 app.Run();
