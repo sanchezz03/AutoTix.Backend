@@ -8,5 +8,6 @@ public interface IAuthService
 {
     Task<SendSms> SendSmsAsync(SendSmsRequest request);
     Task<AuthResult> LoginAsync(LoginRequest request);
+    Task<UzAccessTokenResult> GetUzAccessTokenAsync(long userId);
     Task LogoutAsync(long userId);
 }

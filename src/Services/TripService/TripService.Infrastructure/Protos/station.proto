@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option csharp_namespace = "UserService.Infrastructure.Protos";
+
+package railway;
+
+// ------------------------
+// Models
+// ------------------------
+
+message GrpcStation {
+    int32 id = 1;
+    string name = 2;
+}
+
+message GrpcArrival {
+    string train = 1;
+    string route = 2;
+    int32 time = 3;
+    string platform = 4;
+    int32 delay_minutes = 5;
+}
+
+message GrpcDeparture {
+    string train = 1;
+    string route = 2;
+    int32 time = 3;
+    string platform = 4;
+}
+
+message GrpcStationBoard {
+    GrpcStation station = 1;
+    repeated GrpcArrival arrivals = 2;
+    repeated GrpcDeparture departures = 3;
+    bool peron = 4;
+}
+
+
+// ------------------------
+// Requests
+// ------------------------
+
+message Empty {}
+
+message StationBoardRequest {
+    int64 id = 1;
+}
+
+// ------------------------
+// Responses
+// ------------------------
+
+message StationsResponse {
+    repeated GrpcStation stations = 1;
+}
+
+message StationBoardsResponse {
+    repeated GrpcStationBoard boards = 1;
+}
+
+message StationBoardResponse {
+    GrpcStationBoard board = 1;
+}
+
+// ------------------------
+// gRPC Service
+// ------------------------
+
+service StationServiceGrpc {
+    rpc GetStations (Empty) returns (StationsResponse);
+    rpc GetStationBoards (Empty) returns (StationBoardsResponse);
+    rpc GetStationBoard (StationBoardRequest) returns (StationBoardResponse);
+}

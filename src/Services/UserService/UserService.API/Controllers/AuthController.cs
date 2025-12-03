@@ -32,6 +32,21 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("uz-access-token")]
+    public async Task<IActionResult> GetUzAccessToken()
+    {
+        var currentUserId = _httpContextAccessor.HttpContext?.User
+            .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(currentUserId))
+            return Unauthorized("User ID missing in token");
+
+        long userId = long.Parse(currentUserId);
+
+        var result = await _service.GetUzAccessTokenAsync(userId);
+        return Ok(result);
+    }
+
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {

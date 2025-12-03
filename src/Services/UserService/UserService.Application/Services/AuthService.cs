@@ -81,6 +81,23 @@ public class AuthService : IAuthService
         };
     }
 
+    public async Task<UzAccessTokenResult> GetUzAccessTokenAsync(long userId)
+    {
+        var credential = await _credentials.GetActiveCredentialAsync(userId);
+        if (credential == null)
+        {
+            throw new InvalidOperationException($"No active Railway token for user {userId}");
+        }
+
+        var token = _encryption.Unprotect(credential.EncryptedAccessToken);
+
+        return new UzAccessTokenResult
+        {
+            AccessToken = token,
+            ExpiresAt = credential.ExpiresAt
+        };
+    }
+
     public async Task LogoutAsync(long userId)
     {
         var credential = await _credentials.GetActiveCredentialAsync(userId);
