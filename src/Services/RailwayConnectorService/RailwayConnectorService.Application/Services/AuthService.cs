@@ -21,12 +21,12 @@ public class AuthService : IAuthService
         var cacheKey = $"auth:sms:{request.Phone}";
 
         var cached = await _cacheService.GetAsync<SendSms>(cacheKey);
-        if (cached != null)
-            return cached;
+        //if (cached != null)
+        //    return cached;
 
         var response = await _authWebService.SendSmsAsync(request);
 
-        await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromMinutes(2));
+        await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromMinutes(1));
 
         return response;
     }

@@ -101,7 +101,7 @@ public abstract class BaseWebService
         }
 
         #region TEST BY BEARER TOKEN
-        
+
         //var authHeader = _httpContextAccessor.HttpContext?
         //    .Request.Headers["Authorization"]
         //    .ToString();
