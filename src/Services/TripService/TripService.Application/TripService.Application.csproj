@@ -5,10 +5,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Commands\" />
 		<Folder Include="DTOs\Request\" />
 		<Folder Include="DTOs\Response\RailwayConnector\Models\TripResponse\" />
-		<Folder Include="Queries\" />
 	</ItemGroup>
 
 	<ItemGroup>

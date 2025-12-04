@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-option csharp_namespace = "TripService.Infrastructure.Protos";
+option csharp_namespace = "RailwayConnectorService.API.Protos";
 
 package station;
+
+import "google/protobuf/empty.proto";
 
 // ------------------------
 // Models
@@ -39,8 +41,6 @@ message GrpcStationBoard {
 // Requests
 // ------------------------
 
-message Empty {}
-
 message StationBoardRequest {
     int64 id = 1;
 }
@@ -54,7 +54,7 @@ message StationsResponse {
 }
 
 message StationBoardsResponse {
-    repeated GrpcStation boards = 1;
+    repeated GrpcStation stations = 1;
 }
 
 message StationBoardResponse {
@@ -66,7 +66,7 @@ message StationBoardResponse {
 // ------------------------
 
 service StationServiceGrpc {
-    rpc GetStations (Empty) returns (StationsResponse);
-    rpc GetStationBoards (Empty) returns (StationBoardsResponse);
+    rpc GetStations (google.protobuf.Empty) returns (StationsResponse);
+    rpc GetStationBoards (google.protobuf.Empty) returns (StationBoardsResponse);
     rpc GetStationBoard (StationBoardRequest) returns (StationBoardResponse);
 }

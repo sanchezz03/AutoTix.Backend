@@ -6,7 +6,7 @@ namespace RailwayConnectorService.Application.Interfaces;
 
 public interface IStationWebService
 {
-    Task<List<Station>> GetStationsAsync();
-    Task<List<Station>> GetStationBoardsAsync();
-    Task<StationBoard> GetStationBoardAsync(long id);
+    Task<List<Station>> GetStationsAsync(string accessToken);
+    Task<List<Station>> GetStationBoardsAsync(string accessToken);
+    Task<StationBoard> GetStationBoardAsync(long id, string accessToken);
 }

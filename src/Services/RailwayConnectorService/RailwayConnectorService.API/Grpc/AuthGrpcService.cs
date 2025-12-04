@@ -2,6 +2,8 @@
 using RailwayConnectorService.API.Protos;
 using RailwayConnectorService.Application.Services.Interfaces;
 using RailwayConnectorService.Contracts.Models.Uz.Request.Auth;
+using Google.Protobuf.WellKnownTypes;
+using Empty = Google.Protobuf.WellKnownTypes.Empty;
 
 namespace RailwayConnectorService.API.Grpc;
 
