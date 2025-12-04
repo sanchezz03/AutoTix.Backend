@@ -7,17 +7,31 @@ namespace TripService.API.Controllers;
 [ApiController]
 public class StationController : ControllerBase
 {
-    private readonly IStationService _tripService;
+    private readonly IStationService _stationService;
 
-    public StationController(IStationService tripService)
+    public StationController(IStationService stationService)
     {
-        _tripService = tripService;
+        _stationService = stationService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTrips()
+    public async Task<IActionResult> GetStations()
     {
-        var trips = await _tripService.GetTripsAsync();
-        return Ok(trips);
+        var result = await _stationService.GetStationsAsync();
+        return Ok(result);
+    }
+
+    [HttpGet("boards")]
+    public async Task<IActionResult> GetStationBoards()
+    {
+        var result = await _stationService.GetStationBoardsAsync();
+        return Ok(result);
+    }
+
+    [HttpGet("boards/{id}")]
+    public async Task<IActionResult> GetStationBoard(long id)
+    {
+        var result = await _stationService.GetStationBoardAsync(id);
+        return Ok(result);
     }
 }

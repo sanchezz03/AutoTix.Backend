@@ -22,6 +22,10 @@
   </ItemGroup>
 
     <ItemGroup>
+    	<Protobuf Include="Protos\station.proto">
+    	  <ProtoRoot>Protos</ProtoRoot>
+    	  <GrpcServices>Server</GrpcServices>
+    	</Protobuf>
     	<Protobuf Include="Protos\railway.proto" GrpcServices="Server" ProtoRoot="Protos" />
     </ItemGroup>
 

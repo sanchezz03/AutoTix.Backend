@@ -18,5 +18,6 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapGrpcService<AuthGrpcService>();
+app.MapGrpcService<StationGrpcService>();
 
 app.Run();

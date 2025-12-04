@@ -4,6 +4,8 @@ option csharp_namespace = "RailwayConnectorService.API.Protos";
 
 package railway;
 
+import "google/protobuf/empty.proto";
+
 // ------------------------
 // Requests
 // ------------------------
@@ -137,13 +139,11 @@ message GrpcLoginResponse {
     GrpcProfile profile = 2;
 }
 
-message Empty {}
-
 // ------------------------
 // Service
 // ------------------------
 service AuthServiceGrpc {
     rpc SendSms (GrpcSendSmsRequest) returns (GrpcSendSmsResponse);
     rpc Login (GrpcLoginRequest) returns (GrpcLoginResponse);
-    rpc Logout (GrpcLogoutRequest) returns (Empty);
+    rpc Logout (GrpcLogoutRequest) returns (google.protobuf.Empty);
 }

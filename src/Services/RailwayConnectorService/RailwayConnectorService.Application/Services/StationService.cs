@@ -13,18 +13,18 @@ public class StationService : IStationService
         _webService = webService;
     }
 
-    public async Task<List<Station>> GetStationsAsync()
+    public async Task<List<Station>> GetStationsAsync(string accessToken)
     {
-        return await _webService.GetStationsAsync();
+        return await _webService.GetStationsAsync(accessToken);
     }
 
-    public async Task<List<Station>> GetStationBoardsAsync()
+    public async Task<List<Station>> GetStationBoardsAsync(string accessToken)
     {
-        return await _webService.GetStationBoardsAsync();
+        return await _webService.GetStationBoardsAsync(accessToken);
     }
 
-    public async Task<StationBoard> GetStationBoardAsync(long id)
+    public async Task<StationBoard> GetStationBoardAsync(long id, string accessToken)
     {
-        return await _webService.GetStationBoardAsync(id);
+        return await _webService.GetStationBoardAsync(id, accessToken);
     }
 }
