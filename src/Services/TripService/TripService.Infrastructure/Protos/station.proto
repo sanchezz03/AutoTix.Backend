@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "TripService.Infrastructure.Protos";
+option csharp_namespace = "TripService.Infrastructure.Protos.Station";
 
 package station;
 

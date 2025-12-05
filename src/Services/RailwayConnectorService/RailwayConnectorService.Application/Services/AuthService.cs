@@ -35,9 +35,9 @@ public class AuthService : IAuthService
     {
         var cacheKey = $"auth:login:{request.Phone}:{request.Code}";
 
-        var cached = await _cacheService.GetAsync<Login>(cacheKey);
-        if (cached != null)
-            return cached;
+        //var cached = await _cacheService.GetAsync<Login>(cacheKey);
+        //if (cached != null)
+        //    return cached;
 
         var response = await _authWebService.LoginAsync(request);
 

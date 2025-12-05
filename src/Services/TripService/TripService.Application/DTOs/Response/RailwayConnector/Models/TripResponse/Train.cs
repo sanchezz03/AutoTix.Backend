@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
+namespace TripService.Application.DTOs.Response.RailwayConnector.Models.TripResponse;
 
 public class Train
 {

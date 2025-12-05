@@ -7,7 +7,8 @@ using TripService.Infrastructure.Configuration;
 using TripService.Infrastructure.External.Models;
 using TripService.Infrastructure.External.RailwayConnector.Services;
 using TripService.Infrastructure.External.UserService.Services;
-using TripService.Infrastructure.Protos;
+using TripService.Infrastructure.Protos.Station;
+using TripService.Infrastructure.Protos.Trip;
 
 namespace TripService.Infrastructure.Extensions;
 
@@ -21,6 +22,12 @@ public static class InfrastructureServiceExtension
         );
 
         services.AddGrpcClient<StationServiceGrpc.StationServiceGrpcClient>((sp, o) =>
+        {
+            var opts = sp.GetRequiredService<IOptions<RailwayConnectorGrpcOptions>>().Value;
+            o.Address = new Uri(opts.Url);
+        });
+
+        services.AddGrpcClient<TripServiceGrpc.TripServiceGrpcClient>((sp, o) =>
         {
             var opts = sp.GetRequiredService<IOptions<RailwayConnectorGrpcOptions>>().Value;
             o.Address = new Uri(opts.Url);

@@ -18,21 +18,21 @@ public class StationWebService : BaseWebService, IStationWebService
         _baseUrl = options.Value.BaseUrl;
     }
 
-    public Task<List<Station>> GetStationsAsync(string accessToken)
+    public Task<List<Station>> GetStationsAsync(string uzAccessToken)
     {
         var url = $"{_baseUrl}stations?search=";
-        return GetAsync<List<Station>>(url, accessToken);
+        return GetAsync<List<Station>>(url, uzAccessToken);
     }
 
-    public Task<List<Station>> GetStationBoardsAsync(string accessToken)
+    public Task<List<Station>> GetStationBoardsAsync(string uzAccessToken)
     {
         var url = $"{_baseUrl}station-boards";
-        return GetAsync<List<Station>>(url, accessToken);
+        return GetAsync<List<Station>>(url, uzAccessToken);
     }
 
-    public Task<StationBoard> GetStationBoardAsync(long id, string accessToken)
+    public Task<StationBoard> GetStationBoardAsync(long id, string uzAccessToken)
     {
         var url = $"{_baseUrl}station-boards/{id}";
-        return GetAsync<StationBoard>(url, accessToken);
+        return GetAsync<StationBoard>(url, uzAccessToken);
     }
 }

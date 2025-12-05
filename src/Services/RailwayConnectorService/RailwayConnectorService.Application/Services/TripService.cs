@@ -13,18 +13,23 @@ public class TripService : ITripService
         _tripWebService = tripWebService;
     }
 
-    public async Task<List<Direct>> GetTripAsync(int stationFromId, int stationToId, string date, bool withTransfers = false)
+    public async Task<Trip> GetTripAsync(long stationFromId, long stationToId, string date, string uzAccessToken, bool withTransfers = false)
     {
-        return await _tripWebService.GetTripsAsync(stationFromId, stationToId, date, withTransfers);
+        return await _tripWebService.GetTripAsync(stationFromId, stationToId, date, uzAccessToken, withTransfers);
     }
 
-    public async Task<Direct> GetTripAsync(int tripId)
+    public async Task<Direct> GetTripAsync(long tripId, string uzAccessToken)
     {
-        return await _tripWebService.GetTripAsync(tripId);
+        return await _tripWebService.GetTripAsync(tripId, uzAccessToken);
     }
 
-    public async Task<List<string>> GetDepartureDatesAsync(int stationFromId, int stationToId)
+    public async Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId, string uzAccessToken)
     {
-        return await _tripWebService.GetDepartureDatesAsync(stationFromId, stationToId);
+        return await _tripWebService.GetDepartureDatesAsync(stationFromId, stationToId, uzAccessToken);
+    }
+
+    public async Task<WagonByClass> GetWagonByClassAsync(long tripId, string wagonClass, string uzAccessToken)
+    {
+        return await _tripWebService.GetWagonByClassAsync(tripId, wagonClass, uzAccessToken);
     }
 }
