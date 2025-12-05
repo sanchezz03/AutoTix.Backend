@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using RailwayConnectorService.Contracts.Models.Uz.Response.StationResponse;
 
-namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
+namespace TripService.Application.DTOs.Response.RailwayConnector.Models.TripResponse;
 
-public class Direct
+public class TripSegment
 {
     [JsonProperty("id")]
     public long Id { get; set; }
@@ -15,10 +14,10 @@ public class Direct
     public int ArriveAt { get; set; }
 
     [JsonProperty("station_from")]
-    public Station StationFrom { get; set; }
+    public string StationFrom { get; set; }
 
     [JsonProperty("station_to")]
-    public Station StationTo { get; set; }
+    public string StationTo { get; set; }
 
     [JsonProperty("stations_time_offset")]
     public int StationsTimeOffset { get; set; }

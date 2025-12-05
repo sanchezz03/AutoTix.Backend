@@ -1,0 +1,197 @@
+syntax = "proto3";
+
+option csharp_namespace = "TripService.Infrastructure.Protos.Trip";
+
+package trip;
+
+import "google/protobuf/empty.proto";
+
+// ------------------------
+// Models
+// ------------------------
+
+message GrpcContent {
+    string title = 1;
+    string description = 2;
+}
+
+message GrpcDetails {
+    string photo = 1;
+    repeated GrpcContent content = 2;
+}
+
+message GrpcHint {
+    string name = 1;
+    string image = 2;
+    string text = 3;
+    string button_text = 4;
+}
+
+message GrpcPrivilege {
+    int32 id = 1;
+    string name = 2;
+    string description = 3;
+    int32 input_type = 4;
+    bool active = 5;
+    int32 companion_id = 6; 
+    string rules = 7;
+    GrpcHint hint = 8;
+}
+
+message GrpcService {
+    string id = 1;
+    string title = 2;
+    GrpcDetails details = 3;
+    int32 price = 4;
+    string select_type = 5;
+    string select_units_max = 6; 
+    bool selected_by_default = 7;
+}
+
+message GrpcMonitoringWagon {
+    string available_type = 1;
+    string active = 2; 
+}
+
+message GrpcWagon {
+    string id = 1;
+    string number = 2;
+    string mockup_name = 3;
+    repeated int32 seats = 4;
+    int32 free_seats_top = 5;
+    int32 free_seats_lower = 6;
+    int32 price = 7;
+    bool air_conditioner = 8;
+    repeated GrpcService services = 9;
+    repeated GrpcPrivilege privileges = 10;
+}
+
+message GrpcWagonByClass {
+    repeated GrpcWagon wagons = 1;
+    GrpcMonitoringWagon monitoring = 2;
+    string train_direction = 3;
+}
+
+message GrpcStation {
+    int32 id = 1;
+    string name = 2;
+}
+
+message GrpcWagonClass {
+    string id = 1;
+    string name = 2;
+    int32 free_seats = 3;
+    int32 price = 4;
+    repeated string amenities = 5;
+}
+
+message GrpcTrain {
+    int32 id = 1;
+    string station_from = 2;
+    string station_to = 3;
+    string number = 4;
+    int32 type = 5;
+    repeated GrpcWagonClass wagon_classes = 6;
+    string info_popup = 7;
+}
+
+message GrpcMonitoring {
+    bool allowed = 1;
+    bool auto_purchase = 2;
+}
+
+message GrpcDirect {
+    int64 id = 1;
+    int32 depart_at = 2;
+    int32 arrive_at = 3;
+    GrpcStation  station_from = 4;
+    GrpcStation  station_to = 5;
+    int32 stations_time_offset = 6;
+    GrpcTrain train = 7;
+    string discount = 8;
+    string custom_tag = 9;
+    GrpcMonitoring monitoring = 10;
+    bool is_departed = 11;
+}
+
+message GrpcTripSegment {
+    int64 id = 1;
+    int32 depart_at = 2;
+    int32 arrive_at = 3;
+    string station_from = 4;     
+    string station_to = 5;       
+    int32 stations_time_offset = 6;
+    GrpcTrain train = 7;
+    string discount = 8;
+    string custom_tag = 9;
+    GrpcMonitoring monitoring = 10;
+    bool is_departed = 11;
+}
+
+message GrpcTrip {
+    string station_from = 1;
+    string station_to = 2;
+    repeated GrpcTripSegment direct = 3;
+    string with_transfer = 4;
+    string monitoring = 5;
+}
+
+message GrpcDepartureDates {
+    repeated string dates = 1;
+}
+
+// ------------------------
+// Requests
+// ------------------------
+
+message WagonByClassRequest {
+    int64 trip_id = 1;
+    string wagon_class = 2;
+}
+
+message TripRequest {
+    int64 station_from_id = 1;
+    int64 station_to_id = 2;
+    string date = 3;
+    bool with_transfers = 4;
+}
+
+message TripByIdRequest {
+    int64 trip_id = 1;
+}
+
+message DepartureDatesRequest {
+    int64 station_from_id = 1;
+    int64 station_to_id = 2;
+}
+
+// ------------------------
+// Responses
+// ------------------------
+
+message WagonByClassResponse {
+    GrpcWagonByClass data = 1;
+}
+
+message TripResponse {
+    GrpcTrip trip = 1;
+}
+
+message RouteResponse {
+    GrpcDirect trip = 1;
+}
+
+message DepartureDatesResponse {
+    repeated string dates = 1;
+}
+
+// ------------------------
+// gRPC Service
+// ------------------------
+
+service TripServiceGrpc {
+    rpc GetTrip (TripRequest) returns (TripResponse);
+    rpc GetTripById (TripByIdRequest) returns (RouteResponse);
+    rpc GetDepartureDates (DepartureDatesRequest) returns (DepartureDatesResponse);
+    rpc GetWagonsByClass (WagonByClassRequest) returns (WagonByClassResponse);
+}

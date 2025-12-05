@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using RailwayConnectorService.Contracts.Models.Uz.Response.StationResponse;
+using TripService.Application.DTOs.Response.RailwayConnector.Models.StationResponse;
 
-namespace RailwayConnectorService.Contracts.Models.Uz.Response.TripResponse;
+namespace TripService.Application.DTOs.Response.RailwayConnector.Models.TripResponse;
 
 public class Direct
 {

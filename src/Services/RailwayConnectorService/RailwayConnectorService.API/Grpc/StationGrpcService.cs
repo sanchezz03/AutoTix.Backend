@@ -1,6 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using RailwayConnectorService.API.Protos;
+using RailwayConnectorService.API.Protos.Station;
 using RailwayConnectorService.Application.Services.Interfaces;
 using RailwayConnectorService.Contracts.Models.Uz.Response.StationResponse;
 
@@ -17,8 +17,8 @@ public class StationGrpcService : StationServiceGrpc.StationServiceGrpcBase
 
     public override async Task<StationsResponse> GetStations(Empty request, ServerCallContext context)
     {
-        var token = ExtractToken(context);
-        var stations = await _stationService.GetStationsAsync(token);
+        var uzAccessToken = ExtractUzAccessToken(context);
+        var stations = await _stationService.GetStationsAsync(uzAccessToken);
 
         return new StationsResponse
         {
@@ -28,8 +28,8 @@ public class StationGrpcService : StationServiceGrpc.StationServiceGrpcBase
 
     public override async Task<StationBoardsResponse> GetStationBoards(Empty request, ServerCallContext context)
     {
-        var token = ExtractToken(context);
-        var stationBoards = await _stationService.GetStationBoardsAsync(token);
+        var uzAccessToken = ExtractUzAccessToken(context);
+        var stationBoards = await _stationService.GetStationBoardsAsync(uzAccessToken);
 
         return new StationBoardsResponse
         {
@@ -39,8 +39,8 @@ public class StationGrpcService : StationServiceGrpc.StationServiceGrpcBase
 
     public override async Task<StationBoardResponse> GetStationBoard(StationBoardRequest request, ServerCallContext context)
     {
-        var token = ExtractToken(context);
-        var board = await _stationService.GetStationBoardAsync(request.Id, token);
+        var uzAccessToken = ExtractUzAccessToken(context);
+        var board = await _stationService.GetStationBoardAsync(request.Id, uzAccessToken);
 
         return new StationBoardResponse
         {
@@ -50,7 +50,7 @@ public class StationGrpcService : StationServiceGrpc.StationServiceGrpcBase
 
     #region Private methods
 
-    private string ExtractToken(ServerCallContext context)
+    private string ExtractUzAccessToken(ServerCallContext context)
     {
         var raw = context.RequestHeaders.GetValue("Authorization");
         if (raw == null) return "";

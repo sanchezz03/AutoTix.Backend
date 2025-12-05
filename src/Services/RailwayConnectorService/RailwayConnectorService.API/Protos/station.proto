@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "RailwayConnectorService.API.Protos";
+option csharp_namespace = "RailwayConnectorService.API.Protos.Station";
 
 package station;
 

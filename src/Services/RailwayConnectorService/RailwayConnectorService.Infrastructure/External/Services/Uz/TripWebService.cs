@@ -18,21 +18,28 @@ public class TripWebService : BaseWebService, ITripWebService
         _baseUrl = options.Value.BaseUrl;
     }
 
-    public Task<List<Direct>> GetTripsAsync(int stationFromId, int stationToId, string date, bool withTransfers = false)
+    public Task<Trip> GetTripAsync(long stationFromId, long stationToId, string date, string uzAccessToken, bool withTransfers = false)
     {
-        var url = $"{_baseUrl}trips?station_from_id={stationFromId}&station_to_id={stationToId}&with_transfers={(withTransfers ? 1 : 0)}&date={date}";
-        return GetAsync<List<Direct>>(url);
+        var url = $"{_baseUrl}v3/trips?station_from_id={stationFromId}&station_to_id={stationToId}&with_transfers={(withTransfers ? 1 : 0)}&date={date}";
+        return GetAsync<Trip>(url, uzAccessToken);
     }
 
-    public Task<Direct> GetTripAsync(int tripId)
+    public Task<Direct> GetTripAsync(long tripId, string uzAccessToken)
     {
-        var url = $"{_baseUrl}trips/{tripId}";
-        return GetAsync<Direct>(url);
+        var url = $"{_baseUrl}v3/trips/{tripId}";
+        return GetAsync<Direct>(url, uzAccessToken);
     }
 
-    public Task<List<string>> GetDepartureDatesAsync(int stationFromId, int stationToId)
+    public Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId, string uzAccessToken)
     {
         var url = $"{_baseUrl}trips/departure-dates?station_from_id={stationFromId}&station_to_id={stationToId}";
-        return GetAsync<List<string>>(url);
+        return GetAsync<List<string>>(url, uzAccessToken);
+    }
+
+    public Task<WagonByClass> GetWagonByClassAsync(long tripId, string wagonClass, string uzAccessToken)
+    {
+        var encodedWagonClass = Uri.EscapeDataString(wagonClass);
+        var url = $"{_baseUrl}v3/trips/{tripId}/wagons-by-class/{encodedWagonClass}";
+        return GetAsync<WagonByClass>(url, uzAccessToken);
     }
 }

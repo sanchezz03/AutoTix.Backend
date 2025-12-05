@@ -4,7 +4,8 @@ namespace RailwayConnectorService.Application.Interfaces;
 
 public interface ITripWebService
 {
-    Task<List<Direct>> GetTripsAsync(int stationFromId, int stationToId, string date, bool withTransfers = false);
-    Task<Direct> GetTripAsync(int tripId);
-    Task<List<string>> GetDepartureDatesAsync(int stationFromId, int stationToId);
+    Task<Trip> GetTripAsync(long stationFromId, long stationToId, string date, string uzAccessToken, bool withTransfers = false);
+    Task<Direct> GetTripAsync(long tripId, string uzAccessToken);
+    Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId, string uzAccessToken);
+    Task<WagonByClass> GetWagonByClassAsync(long tripId, string wagonClass, string uzAccessToken);
 }

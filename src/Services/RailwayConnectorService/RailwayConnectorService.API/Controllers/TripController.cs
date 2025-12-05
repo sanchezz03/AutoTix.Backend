@@ -17,7 +17,7 @@ public class TripController : ControllerBase
     [HttpGet("{tripId}")]
     public async Task<IActionResult> GetTrip(int tripId)
     {
-        var trip = await _tripService.GetTripAsync(tripId);
+        var trip = await _tripService.GetTripAsync(tripId, "");
         if (trip == null)
         {
             return NotFound();
@@ -32,7 +32,7 @@ public class TripController : ControllerBase
                                               [FromQuery] string date,
                                               [FromQuery] bool withTransfers = false)
     {
-        var trips = await _tripService.GetTripAsync(stationFromId, stationToId, date, withTransfers);
+        var trips = await _tripService.GetTripAsync(stationFromId, stationToId, date, "", withTransfers);
         if (trips == null)
         {
             return NotFound();
@@ -45,7 +45,7 @@ public class TripController : ControllerBase
     public async Task<IActionResult> GetDepartureDates([FromQuery] int stationFromId,
                                                        [FromQuery] int stationToId)
     {
-        var dates = await _tripService.GetDepartureDatesAsync(stationFromId, stationToId);
+        var dates = await _tripService.GetDepartureDatesAsync(stationFromId, stationToId, "");
         return Ok(dates);
     }
 }
