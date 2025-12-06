@@ -11,6 +11,6 @@ public interface IRailwayConnectorService
 
     Task<Direct> GetTripAsync(long tripId, string accessToken = "");
     Task<Trip> GetTripAsync(long stationFromId, long stationToId, string date, bool withTransfers = false, string accessToken = "");
-    Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId, string accessToken = "");
+    Task<DepartureDate> GetDepartureDatesAsync(long stationFromId, long stationToId, string accessToken = "");
     Task<WagonByClass> GetWagonsByClassAsync(long tripId, string wagonClass, string accessToken = "");
 }
