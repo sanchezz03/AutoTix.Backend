@@ -182,7 +182,7 @@ message RouteResponse {
 }
 
 message DepartureDatesResponse {
-    repeated string dates = 1;
+    GrpcDepartureDates dates = 1;
 }
 
 // ------------------------

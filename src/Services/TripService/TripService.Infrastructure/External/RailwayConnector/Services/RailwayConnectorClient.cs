@@ -81,7 +81,7 @@ public class RailwayConnectorClient : IRailwayConnectorService
         return MapTrip(response.Trip);
     }
 
-    public async Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId, string accessToken = "")
+    public async Task<DepartureDate> GetDepartureDatesAsync(long stationFromId, long stationToId, string accessToken = "")
     {
         var request = new DepartureDatesRequest
         {
@@ -89,9 +89,12 @@ public class RailwayConnectorClient : IRailwayConnectorService
             StationToId = stationToId
         };
 
-        var response = await _tripGrpc.GetDepartureDatesAsync(request, headers: BuildHeaders(accessToken)); 
+        var response = await _tripGrpc.GetDepartureDatesAsync(request, headers: BuildHeaders(accessToken));
 
-        return response.Dates.ToList();
+        return new DepartureDate
+        {
+            Dates = response.Dates?.Dates.ToList() ?? new List<string>()
+        };
     }
 
     public async Task<WagonByClass> GetWagonsByClassAsync(long tripId, string wagonClass, string accessToken = "")

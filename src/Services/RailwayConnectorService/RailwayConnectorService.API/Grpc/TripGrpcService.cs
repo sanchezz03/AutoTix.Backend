@@ -47,12 +47,18 @@ public class TripGrpcService : TripServiceGrpc.TripServiceGrpcBase
     public override async Task<DepartureDatesResponse> GetDepartureDates(DepartureDatesRequest request, ServerCallContext context)
     {
         var uzAccessToken = ExtractUzAccessToken(context);
-        var dates = await _tripService.GetDepartureDatesAsync(request.StationFromId, request.StationToId, uzAccessToken);
+        var date = await _tripService.GetDepartureDatesAsync(request.StationFromId, request.StationToId, uzAccessToken);
 
-        return new DepartureDatesResponse
+        var response = new DepartureDatesResponse
         {
-            Dates = { dates }
+            Dates = new GrpcDepartureDates()
         };
+        if (date?.Dates != null)
+        {
+            response.Dates.Dates.AddRange(date.Dates);
+        }
+
+        return response;
     }
 
     public override async Task<WagonByClassResponse> GetWagonsByClass(WagonByClassRequest request, ServerCallContext context)

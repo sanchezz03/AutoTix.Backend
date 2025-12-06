@@ -43,18 +43,22 @@ public class TripService : ITripService
         return response;
     }
 
-    public async Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId, string uzAccessToken)
+    public async Task<DepartureDate> GetDepartureDatesAsync(long stationFromId, long stationToId, string uzAccessToken)
     {
         var cacheKey = $"trip:dates:{stationFromId}:{stationToId}";
-        var cached = await _cacheService.GetAsync<List<string>>(cacheKey);
+        var cached = await _cacheService.GetAsync<DepartureDate>(cacheKey);
         if (cached != null)
         {
             return cached;
         }
 
         var response = await _tripWebService.GetDepartureDatesAsync(stationFromId, stationToId, uzAccessToken);
-        await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromSeconds(30));
-        return response;
+        var departureDate = new DepartureDate
+        {
+            Dates = response
+        };
+        await _cacheService.SetAsync(cacheKey, departureDate, TimeSpan.FromSeconds(30));
+        return departureDate;
     }
 
     public async Task<WagonByClass> GetWagonByClassAsync(long tripId, string wagonClass, string uzAccessToken)

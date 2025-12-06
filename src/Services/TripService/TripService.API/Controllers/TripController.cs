@@ -41,7 +41,7 @@ public class TripController : ControllerBase
     public async Task<IActionResult> GetDepartureDates([FromQuery] long stationFromId,
                                                        [FromQuery] long stationToId)
     {
-        var dates = await _routeService.GetDepartureDatesAsync(stationFromId, stationToId);
+        var dates = await _routeService.GetDepartureDateAsync(stationFromId, stationToId);
         return Ok(dates);
     }
 

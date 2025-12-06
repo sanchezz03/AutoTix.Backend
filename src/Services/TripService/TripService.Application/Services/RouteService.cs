@@ -27,7 +27,7 @@ public class RouteService : IRouteService
         return await _railwayConnectorService.GetTripAsync(stationFromId, stationToId, date, withTransfers, uzAccessToken.AccessToken);
     }
 
-    public async Task<List<string>> GetDepartureDatesAsync(long stationFromId, long stationToId)
+    public async Task<DepartureDate> GetDepartureDateAsync(long stationFromId, long stationToId)
     {
         var uzAccessToken = await _userServiceClient.GetRailwayTokenAsync();
         return await _railwayConnectorService.GetDepartureDatesAsync(stationFromId, stationToId, uzAccessToken.AccessToken);
