@@ -1,6 +1,18 @@
 version: '3.9'
 
 services:
+ gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    ports:
+      - "7000:80"
+    volumes:
+      - .:/app
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
  railwayconnectorservice:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
