@@ -1,0 +1,92 @@
+version: '3.9'
+
+services:
+ railwayconnectorservice:
+    image: railwayconnectorservice
+    container_name: railwayconnectorservice
+    build:
+      context: .
+      dockerfile: src/Services/RailwayConnectorService/RailwayConnectorService.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - Redis__ConnectionString=redis:6379
+      - Redis__InstanceName=RailwayConnectorService
+      - UzApi__BaseUrl=https://app.uz.gov.ua/api/
+    depends_on:
+      - redis
+    ports:
+      - "7001:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+ userservice:
+    image: userservice
+    container_name: userservice
+    build:
+      context: .
+      dockerfile: src/Services/UserService/UserService.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=usersql;Database=UserDb;User=sa;Password=YourStrongPassword123;TrustServerCertificate=True;
+      - GrpcClients__RailwayConnector__Url=http://railwayconnectorservice:80
+      - Jwt__Secret=a18fc2f2b04d4f66b9837f85f23e9e37d884f3e6a9b2c773a8e6e7cb6c87c912
+      - Jwt__Issuer=UserService
+      - Jwt__Audience=AutoTixClient
+      - Jwt__ExpiresSeconds=3600
+    depends_on:
+      - usersql
+      - railwayconnectorservice
+    ports:
+      - "7002:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+ tripservice:
+    image: tripservice
+    container_name: tripservice
+    build:
+      context: .
+      dockerfile: src/Services/TripService/TripService.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - GrpcClients__RailwayConnector__Url=http://railwayconnectorservice:80
+      - GrpcClients__UserService__Url=http://userservice:80
+    depends_on:
+      - railwayconnectorservice
+      - userservice
+    ports:
+      - "7003:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+ usersql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: usersql
+    restart: always
+    environment:
+      SA_PASSWORD: "YourStrongPassword123"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
+    ports:
+      - "1435:1433"
+    volumes:
+      - usersql_data:/var/opt/mssql
+
+ redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+  usersql_data:

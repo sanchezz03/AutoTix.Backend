@@ -24,14 +24,7 @@ public static class LoggerExtension
                 .MinimumLevel.Override("Microsoft.AspNetCore.Server.Kestrel", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.Extensions.Http", LogEventLevel.Warning)
                 .MinimumLevel.Override("System.Net.Http.HttpClient", LogEventLevel.Warning);
-#if DEBUG
-#else
-                    _inSeriesLoggerConfiguration.WriteTo.AmazonCloudWatch(
-                        logGroup: Const.PATH_LOG_GROUP,
-                        logStreamPrefix: awsStreamName,
-                        cloudWatchClient: new AmazonCloudWatchLogsClient()
-                    );
-#endif
+
             if (isWriteConsole)
             {
                 _inSeriesLoggerConfiguration.WriteTo.Console();

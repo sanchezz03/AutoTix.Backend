@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+ railwayconnectorservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    ports:
+      - "7001:80"
+    volumes:
+      - .:/app
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+ userservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    ports:
+      - "7002:80"
+    volumes:
+      - .:/app
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+ 
+ tripservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    ports:
+      - "7003:80"
+    volumes:
+      - .:/app
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
