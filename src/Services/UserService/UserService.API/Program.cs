@@ -22,8 +22,6 @@ var app = builder.Build();
 
 app.ApplyMigrations();
 
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

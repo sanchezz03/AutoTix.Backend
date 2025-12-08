@@ -16,13 +16,6 @@ builder.Services
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
 app.UseCors("CorsPolicy");
 app.MapControllers();
 app.Run();
