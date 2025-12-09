@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Hosting;
 using OrderService.Application.Events;
+using OrderService.Infrastructure.RabbitMq.Connection.Interface;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -10,10 +11,10 @@ namespace OrderService.Infrastructure.RabbitMq;
 
 public class MessageConsumer : BackgroundService
 {
-    private readonly IConnection _connection;
+    private readonly IRabbitMQConnection _connection;
     private readonly IMediator _mediator;
 
-    public MessageConsumer(IConnection connection, IMediator mediator)
+    public MessageConsumer(IRabbitMQConnection connection, IMediator mediator)
     {
         _connection = connection;
         _mediator = mediator;
@@ -21,7 +22,7 @@ public class MessageConsumer : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var channel = _connection.CreateModel();
+        var channel = _connection.Connection.CreateModel();
 
         channel.ExchangeDeclare("payment_exchange", ExchangeType.Direct);
 

@@ -11,9 +11,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
+      - railwayconnectorservice
       - userservice
       - tripservice
       - orderservice
+      - paymentservice
 
  railwayconnectorservice:
     image: railwayconnectorservice
@@ -94,6 +96,26 @@ services:
       - rabbitmq 
     ports:
       - "7004:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+ paymentservice:
+    image: paymentservice
+    container_name: paymentservice
+    build:
+      context: .
+      dockerfile: src/Services/PaymentService/PaymentService.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__UserName=guest
+      - RabbitMq__Password=guest
+    depends_on:
+      - rabbitmq
+    ports:
+      - "7005:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
